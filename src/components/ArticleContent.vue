@@ -1,9 +1,7 @@
 <template>
   <q-list bordered class="rounded-borders">
     <div class="q-pa-md q-gutter-sm">
-      <q-btn color="primary" @click="setCurrentDay(today())">
-        Artikel von Heute
-      </q-btn>
+      <q-btn color="primary" @click="setCurrentDay"> Artikel von Heute </q-btn>
     </div>
     <q-expansion-item
       v-model="jmf"
@@ -13,20 +11,27 @@
       label="Jesus mein Vorläufer"
     >
       <q-expansion-item
-        v-for="day in articleContent"
-        :key="day.date"
-        v-model="currentDay[day.date]"
+        v-for="(article, index) in articles"
+        :key="article.title"
+        v-model="currentDay[article.date]"
         popup
         icon="view_day"
-        :label="day.title"
-        :header-inset-level="0.5"
         group="somegroup"
-        :caption="day.date"
-        class="text-h6"
       >
+        <template v-slot:header>
+          <q-item-section avatar>
+            <q-chip size="md" color="primary" text-color="white">
+              {{ index + 1 }}
+            </q-chip>
+          </q-item-section>
+          <q-item-section>
+            <div class="text-h6">{{ article.title }}</div>
+            <div class="text-caption">{{ article.date }}</div>
+          </q-item-section>
+        </template>
         <q-card>
-          <q-card-section class="text-caption">
-            {{ day.content }}
+          <q-card-section>
+            <div class="text-caption" v-html="article.content"></div>
           </q-card-section>
         </q-card>
       </q-expansion-item>
@@ -35,49 +40,93 @@
 </template>
 
 <script>
-import { articleContent } from "../data/articleContent"; // Adjust the path as per your structure
-
 export default {
-  name: "WeekPlan",
+  name: "ArticleContent",
   data() {
     return {
       currentDay: {},
       jmf: false,
-      articleContent, // Use the imported articleContent
+      articles: [], // Array to store the articles
     };
   },
+  mounted() {
+    this.loadArticles();
+  },
   methods: {
+    formatDate(date) {
+      // Format the date as "Montag 21. November"
+      const dayOfWeek = date.toLocaleString("de-DE", { weekday: "long" });
+      const day = date.getDate();
+      const month = date.toLocaleString("de-DE", { month: "long" });
+      return `${dayOfWeek} ${day}. ${month}`;
+    },
+
+    loadArticles() {
+      fetch("/articles/articles.json")
+        .then((response) => response.json())
+        .then((filenames) => {
+          let counter = 1; // Initialize article counter
+          filenames.forEach((filename) => {
+            fetch(`/articles/${filename}.txt`)
+              .then((response) => response.text())
+              .then((text) => {
+                const lines = text.split("\n");
+                const title = lines[0];
+                const content = this.formatContent(lines.slice(1));
+                this.articles.push({
+                  number: counter++,
+                  title,
+                  content,
+                  date: filename,
+                });
+              })
+              .catch((error) => console.error("Error loading article:", error));
+          });
+        })
+        .catch((error) => console.error("Error loading articles list:", error));
+    },
+
+    formatContent(lines) {
+      // Separate paragraphs with empty lines
+      return lines
+        .map((line) => (line.trim() === "" ? "<p></p>" : `<p>${line}</p>`))
+        .join("");
+    },
     today() {
-      // Helper function to format dates
-      const formatDate = (date) => {
-        return date.toLocaleDateString("en-US", {
-          day: "2-digit",
-          month: "long",
-        });
-      };
-
       let todayDate = new Date();
-      let dayOfWeek = todayDate.getDay();
+      const dayOfWeek = todayDate.getDay();
 
-      // Adjust for weekends: set to Friday if today is Saturday (6) or Sunday (0)
+      // If today is Saturday (6) or Sunday (0), adjust to the previous Friday
       if (dayOfWeek === 0) {
-        todayDate.setDate(todayDate.getDate() - 2); // Go back 2 days to Friday
+        // Sunday
+        todayDate.setDate(todayDate.getDate() - 2); // Go back to Friday
       } else if (dayOfWeek === 6) {
-        todayDate.setDate(todayDate.getDate() - 1); // Go back 1 day to Friday
+        // Saturday
+        todayDate.setDate(todayDate.getDate() - 1); // Go back to Friday
       }
 
-      const formattedToday = formatDate(todayDate);
-
-      // Find matching article or return the first article's date
-      return (
-        this.articleContent.find(
-          (item) => formatDate(new Date(item.date)) === formattedToday
-        )?.date || this.articleContent[0].date
-      );
+      return this.formatDate(todayDate);
     },
-    setCurrentDay(day) {
-      this.currentDay[day] = true;
-      this.jmf = true;
+
+    setCurrentDay() {
+      const todayFormatted = this.today();
+      const todayArticle = this.articles.find(
+        (article) => article.date === todayFormatted
+      );
+
+      if (todayArticle) {
+        this.currentDay[todayArticle.date] = true;
+        this.jmf = true; // Ensure the expansion item for today's article is opened
+      } else {
+        // If no article found for today, default to the first article
+        if (this.articles.length > 0) {
+          const firstArticle = this.articles[0];
+          this.currentDay[firstArticle.date] = true;
+          this.jmf = true;
+        } else {
+          console.warn("No articles are available.");
+        }
+      }
     },
   },
 };

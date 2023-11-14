@@ -27,7 +27,7 @@
         </template>
         <q-card>
           <q-card-section>
-            <div v-html="chapter.content"></div>
+            <div class="text-caption" v-html="chapter.content"></div>
           </q-card-section>
         </q-card>
       </q-expansion-item>
