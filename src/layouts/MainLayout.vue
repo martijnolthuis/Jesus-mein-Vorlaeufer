@@ -10,8 +10,13 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-
         <q-toolbar-title> Jesus mein Vorläufer </q-toolbar-title>
+        <q-btn
+          flat
+          round
+          @click="$q.dark.toggle()"
+          :icon="$q.dark.isActive ? 'brightness_2' : 'brightness_5'"
+        />
       </q-toolbar>
     </q-header>
 
@@ -39,10 +44,16 @@ import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
-    title: "Docs",
-    caption: "quasar.dev",
+    title: "Ein so großes Heil",
+    caption: "literature.bcc.no",
     icon: "school",
-    link: "https://quasar.dev",
+    link: "https://literature.bcc.no/books/71/1",
+  },
+  {
+    title: "BMM App",
+    caption: "BMM",
+    icon: "folder_shared",
+    link: "https://bmm.brunstad.org/welcome",
   },
 ];
 

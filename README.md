@@ -14,6 +14,7 @@ npm install
 
 ```bash
 quasar dev
+quasar dev -m pwa
 ```
 
 ### Lint the files
