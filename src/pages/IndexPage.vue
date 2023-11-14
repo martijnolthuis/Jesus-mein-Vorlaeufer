@@ -3,18 +3,18 @@
     <div class="q-pa-md">
       <BookESGH />
       <br />
-      <WeekPlan />
+      <ArticleContent />
     </div>
   </q-page>
 </template>
 
 <script>
 import BookESGH from "src/components/BookESGH.vue";
-import WeekPlan from "src/components/WeekPlan.vue";
+import ArticleContent from "src/components/ArticleContent.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "IndexPage",
-  components: { BookESGH, WeekPlan },
+  components: { BookESGH, ArticleContent },
 });
 </script>
