@@ -27,9 +27,9 @@
             <div class="text-weight-bolder">{{ article.title }}</div>
             <div>{{ article.date }}</div>
           </q-item-section>
-          <!-- <q-item-section side>
-            <div class="row items-center">Elias Aslaksen</div>
-          </q-item-section> -->
+          <q-item-section side>
+            <div class="row items-center">{{ article.author }}</div>
+          </q-item-section>
         </template>
         <q-card>
           <q-card-section>
@@ -41,6 +41,7 @@
             >
               Your browser does not support the audio element.
             </audio>
+            <div v-html="article.subtitle" class="text-weight-bolder"></div>
             <div v-html="article.content"></div>
           </q-card-section>
         </q-card>
@@ -81,10 +82,32 @@ export default {
               .then((text) => {
                 const lines = text.split("\n");
                 const title = lines[0];
-                const content = this.formatContent(lines.slice(1));
+                let subtitle = "";
+                let author = "";
+                let contentStartIndex = 1;
+
+                if (lines[1] && lines[1].startsWith("Author:")) {
+                  author = lines[1].substring(7).trim(); // Extract author name
+                  contentStartIndex = 2;
+                } else if (lines.length > 1) {
+                  subtitle = lines[1];
+                  if (lines[2] && lines[2].startsWith("Author:")) {
+                    author = lines[2].substring(7).trim(); // Extract author name
+                    contentStartIndex = 3;
+                  } else {
+                    contentStartIndex = 2;
+                  }
+                }
+
+                const content = this.formatContent(
+                  lines.slice(contentStartIndex)
+                );
                 const audio = `/audio/${filename}.mp3`; // Path to the audio file
+
                 this.articles.push({
                   title,
+                  subtitle,
+                  author,
                   content,
                   audio,
                   hasAudio: true,
