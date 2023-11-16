@@ -3,20 +3,14 @@
     <div class="q-pa-md q-gutter-sm">
       <q-btn color="primary" @click="setCurrentDay"> Artikel von Heute </q-btn>
     </div>
-    <q-expansion-item
-      v-model="jmf"
-      expand-separator
-      icon="list"
-      class="text-h5"
-      label="Jesus mein Vorläufer"
-    >
+    <q-expansion-item v-model="jmf" icon="list" label="Jesus mein Vorläufer">
       <q-expansion-item
         v-for="(article, index) in articles"
         :key="article.title"
         v-model="currentDay[article.date]"
-        popup
         icon="view_day"
         group="somegroup"
+        :header-inset-level="0"
       >
         <template v-slot:header>
           <q-item-section avatar>
@@ -25,13 +19,16 @@
             </q-chip>
           </q-item-section>
           <q-item-section>
-            <div class="text-h6">{{ article.title }}</div>
-            <div class="text-caption">{{ article.date }}</div>
+            <div class="text-weight-bolder">{{ article.title }}</div>
+            <div>{{ article.date }}</div>
           </q-item-section>
         </template>
         <q-card>
           <q-card-section>
-            <div class="text-caption" v-html="article.content"></div>
+            <audio controls :src="article.audio">
+              Your browser does not support the audio element.
+            </audio>
+            <div v-html="article.content"></div>
           </q-card-section>
         </q-card>
       </q-expansion-item>
@@ -65,7 +62,6 @@ export default {
       fetch("/articles/articles.json")
         .then((response) => response.json())
         .then((filenames) => {
-          let counter = 1; // Initialize article counter
           filenames.forEach((filename) => {
             fetch(`/articles/${filename}.txt`)
               .then((response) => response.text())
@@ -73,12 +69,8 @@ export default {
                 const lines = text.split("\n");
                 const title = lines[0];
                 const content = this.formatContent(lines.slice(1));
-                this.articles.push({
-                  number: counter++,
-                  title,
-                  content,
-                  date: filename,
-                });
+                const audio = `/audio/${filename}.mp3`; // Path to the audio file
+                this.articles.push({ title, content, audio, date: filename });
               })
               .catch((error) => console.error("Error loading article:", error));
           });

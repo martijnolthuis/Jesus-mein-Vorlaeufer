@@ -1,9 +1,9 @@
 <template>
   <q-page>
     <div class="q-pa-md">
-      <BookESGH />
-      <br />
       <ArticleContent />
+      <br />
+      <BookESGH />
     </div>
   </q-page>
 </template>

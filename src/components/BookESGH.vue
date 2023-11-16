@@ -1,11 +1,6 @@
 <template>
   <q-list bordered class="rounded-borders">
-    <q-expansion-item
-      expand-separator
-      icon="book"
-      class="text-h5"
-      label="Ein so großes Heil"
-    >
+    <q-expansion-item expand-separator icon="book" label="Ein so großes Heil">
       <q-expansion-item
         v-for="chapter in bookChapters"
         :key="chapter.number"
@@ -19,15 +14,15 @@
             </q-chip>
           </q-item-section>
           <q-item-section>
-            <div class="text-h6">{{ chapter.title }}</div>
-            <div class="text-caption" v-if="chapter.subtitle">
+            <div class="text-weight-bolder">{{ chapter.title }}</div>
+            <div v-if="chapter.subtitle">
               {{ chapter.subtitle }}
             </div>
           </q-item-section>
         </template>
         <q-card>
           <q-card-section>
-            <div class="text-caption" v-html="chapter.content"></div>
+            <div v-html="chapter.content"></div>
           </q-card-section>
         </q-card>
       </q-expansion-item>

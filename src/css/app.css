@@ -1,1 +1,26 @@
-/* app global css */
+audio {
+  width: 100%; /* Full width for better control visibility */
+  height: 50px; /* Let the browser set the height */
+  display: block;
+  margin: 20px 0; /* Add some margin for visual separation */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+}
+
+/* Customizing controls for Webkit/Blink browsers (Chrome, Safari, new Edge) */
+audio::-webkit-media-controls-panel {
+  background-color: #fff; /* Light background */
+  border-radius: 4px; /* Slightly rounded corners */
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+}
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-volume-slider,
+audio::-webkit-media-controls-mute-button,
+audio::-webkit-media-controls-timeline {
+  color: #333; /* Darker color for better contrast and visibility */
+}
+
+/* Adjustments for Mozilla Firefox - limited options */
+audio::-moz-focus-inner {
+  border: 0; /* Remove extra border in Firefox */
+}
