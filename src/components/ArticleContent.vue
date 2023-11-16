@@ -27,6 +27,9 @@
             <div class="text-weight-bolder">{{ article.title }}</div>
             <div>{{ article.date }}</div>
           </q-item-section>
+          <!-- <q-item-section side>
+            <div class="row items-center">Elias Aslaksen</div>
+          </q-item-section> -->
         </template>
         <q-card>
           <q-card-section>
