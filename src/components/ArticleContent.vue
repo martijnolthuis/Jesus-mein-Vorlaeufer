@@ -1,9 +1,14 @@
 <template>
   <q-list bordered class="rounded-borders">
     <div class="q-pa-md q-gutter-sm">
-      <q-btn color="primary" @click="setCurrentDay"> Artikel von Heute </q-btn>
+      <q-btn color="primary" @click="setCurrentDay"> Beitrag von Heute </q-btn>
     </div>
-    <q-expansion-item v-model="jmf" icon="list" label="Jesus mein Vorläufer">
+    <q-expansion-item
+      v-model="jmf"
+      icon="list"
+      label="Vorbereitung Jugendweihnachtsfeier"
+      caption="Artikel & Musik & Reden"
+    >
       <q-expansion-item
         v-for="(article, index) in articles"
         :key="article.title"
@@ -25,7 +30,12 @@
         </template>
         <q-card>
           <q-card-section>
-            <audio controls :src="article.audio">
+            <audio
+              @error="() => (article.hasAudio = false)"
+              v-if="article.hasAudio"
+              controls
+              :src="article.audio"
+            >
               Your browser does not support the audio element.
             </audio>
             <div v-html="article.content"></div>
@@ -70,7 +80,13 @@ export default {
                 const title = lines[0];
                 const content = this.formatContent(lines.slice(1));
                 const audio = `/audio/${filename}.mp3`; // Path to the audio file
-                this.articles.push({ title, content, audio, date: filename });
+                this.articles.push({
+                  title,
+                  content,
+                  audio,
+                  hasAudio: true,
+                  date: filename,
+                });
               })
               .catch((error) => console.error("Error loading article:", error));
           });

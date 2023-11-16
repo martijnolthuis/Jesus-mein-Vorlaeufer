@@ -1,6 +1,11 @@
 <template>
   <q-list bordered class="rounded-borders">
-    <q-expansion-item expand-separator icon="book" label="Ein so großes Heil">
+    <q-expansion-item
+      expand-separator
+      icon="book"
+      :label="bookName"
+      :caption="bookSubtitle"
+    >
       <q-expansion-item
         v-for="chapter in bookChapters"
         :key="chapter.number"
@@ -32,10 +37,24 @@
 
 <script>
 export default {
-  name: "BookESGH",
+  name: "BookContent",
+  props: {
+    bookFile: {
+      type: String,
+      required: true,
+    },
+  },
+  computed: {
+    bookName() {
+      // Extract the filename from the path and remove the '.txt' extension
+      const fileName = this.bookFile.split("/").pop();
+      return fileName.replace(".txt", "");
+    },
+  },
   data() {
     return {
       bookChapters: [],
+      bookSubtitle: "",
     };
   },
   mounted() {
@@ -43,8 +62,9 @@ export default {
   },
   methods: {
     async loadBook() {
-      const response = await fetch("/books/bookESGH.txt");
+      const response = await fetch(this.bookFile);
       const text = await response.text();
+      this.extractSubtitle(text);
       this.parseBook(text);
     },
     parseBook(text) {
@@ -82,6 +102,10 @@ export default {
       }
 
       this.bookChapters = chapters;
+    },
+    extractSubtitle(text) {
+      const lines = text.split("\n");
+      this.bookSubtitle = lines.length >= 2 ? lines[1].trim() : "";
     },
 
     formatContent(lines) {

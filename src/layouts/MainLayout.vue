@@ -44,16 +44,34 @@ import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
-    title: "Ein so großes Heil",
+    title: "BCCs digitale Bibliothek",
     caption: "literature.bcc.no",
-    icon: "school",
+    icon: "library_books",
     link: "https://literature.bcc.no/books/71/1",
   },
   {
-    title: "BMM App",
-    caption: "BMM",
-    icon: "folder_shared",
-    link: "https://bmm.brunstad.org/welcome",
+    title: "Fra Kåre",
+    caption: "BMM App",
+    icon: "person",
+    link: "https://bmm.brunstad.org/track/112690/de",
+  },
+  {
+    title: "Active Christianity",
+    caption: "aktiveschristentum.de",
+    icon: "toggle_on",
+    link: "https://aktivfeschristentum.de/",
+  },
+  {
+    title: "Ein so großes Heil",
+    caption: "BCC Literature",
+    icon: "book",
+    link: "https://literature.bcc.no/books/71",
+  },
+  {
+    title: "Christus offenbart im Fleisch",
+    caption: "BCC Literature",
+    icon: "book",
+    link: "https://literature.bcc.no/books/53",
   },
 ];
 

@@ -3,18 +3,20 @@
     <div class="q-pa-md">
       <ArticleContent />
       <br />
-      <BookESGH />
+      <BookContent bookFile="/books/Ein so großes Heil.txt" />
+      <br />
+      <BookContent bookFile="/books/Christus offenbart im Fleisch.txt" />
     </div>
   </q-page>
 </template>
 
 <script>
-import BookESGH from "src/components/BookESGH.vue";
+import BookContent from "src/components/BookContent.vue";
 import ArticleContent from "src/components/ArticleContent.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "IndexPage",
-  components: { BookESGH, ArticleContent },
+  components: { BookContent, ArticleContent },
 });
 </script>
