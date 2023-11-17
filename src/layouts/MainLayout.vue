@@ -24,6 +24,7 @@
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+      <q-item to="/ask-question" label="Ask a Question" />
       <q-list>
         <q-item-label header> Siehe auch diese Webseiten </q-item-label>
 

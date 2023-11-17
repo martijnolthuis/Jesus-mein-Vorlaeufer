@@ -1,8 +1,10 @@
 <template>
   <q-page>
     <div class="q-pa-md max-width-container">
-      <IntroductionContent /> <br />
-      <div>Test 2</div>
+      <IntroductionContent />
+      <div class="q-pa-md q-gutter-sm">
+        <q-btn label="Ask a Question" to="/ask-question" color="primary" />
+      </div>
       <ArticleContent /> <br />
       <BookContent bookFile="/books/Ein so großes Heil.txt" /> <br />
       <BookContent bookFile="/books/Christus offenbart im Fleisch.txt" /> <br />
