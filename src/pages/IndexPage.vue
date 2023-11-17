@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="q-pa-md">
+    <div class="q-pa-md max-width-container">
       <IntroductionContent /> <br />
 
       <ArticleContent /> <br />
@@ -22,3 +22,12 @@ export default defineComponent({
   components: { BookContent, ArticleContent, IntroductionContent },
 });
 </script>
+<style>
+.max-width-container {
+  max-width: 800px; /* or any other max-width you prefer */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px; /* Adjust padding as needed */
+  padding-right: 16px; /* Adjust padding as needed */
+}
+</style>

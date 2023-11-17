@@ -18,7 +18,7 @@
           flat
           round
           @click="$q.dark.toggle()"
-          :icon="$q.dark.isActive ? 'brightness_2' : 'brightness_5'"
+          :icon="$q.dark.isActive ? 'brightness_2' : 'light_mode'"
         />
       </q-toolbar>
     </q-header>
