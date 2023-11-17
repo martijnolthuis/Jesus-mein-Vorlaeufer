@@ -2,7 +2,7 @@
   <q-page>
     <div class="q-pa-md max-width-container">
       <IntroductionContent /> <br />
-      <div>Test</div>
+      <div>Test 2</div>
       <ArticleContent /> <br />
       <BookContent bookFile="/books/Ein so großes Heil.txt" /> <br />
       <BookContent bookFile="/books/Christus offenbart im Fleisch.txt" /> <br />
