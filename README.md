@@ -1,6 +1,6 @@
-# jmv (jmv)
+# Jesus mein Vorläufer (jesusmeinvorläufer)
 
-Jesus mein Vorläufer, the goal is to create an application where young people can get learn about Jesus and what he could mean for them.
+Jesus mein Vorläufer, das Ziel ist das wir mir verstehen können wer Jesus ist und was er für uns getan hat. Oder so wie Aslaksen es beschreibt: "Darum ist gerade das Licht über Christus offenbart im Fleisch der Schlüssel zu einem durch und durch siegreichen Leben."
 
 ## Install the dependencies
 

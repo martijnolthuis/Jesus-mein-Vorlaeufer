@@ -1,8 +1,8 @@
 {
-  "name": "jmv",
+  "name": "jesusmeinvorlaeufer",
   "version": "0.0.1",
-  "description": "Jesus mein Vorläufer, the goal is to create an application where young people can get learn about Jesus and what he could mean for them.",
-  "productName": "jmv",
+  "description": "Jesus mein Vorläufer, das Ziel ist das wir mir verstehen können wer Jesus ist und was er für uns getan hat. Oder so wie Aslaksen es beschreibt: 'Darum ist gerade das Licht über Christus offenbart im Fleisch der Schlüssel zu einem durch und durch siegreichen Leben.'",
+  "productName": "Jesus mein Vorläufer",
   "author": "martijnolthuis <martijn.olthuis2@gmail.com>",
   "private": true,
   "scripts": {

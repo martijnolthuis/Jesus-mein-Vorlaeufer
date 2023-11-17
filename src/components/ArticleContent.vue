@@ -18,17 +18,15 @@
         :header-inset-level="0"
       >
         <template v-slot:header>
-          <q-item-section avatar>
+          <q-item-section caption="test" avatar>
             <q-chip size="md" color="primary" text-color="white">
               {{ index + 1 }}
             </q-chip>
           </q-item-section>
           <q-item-section>
             <div class="text-weight-bolder">{{ article.title }}</div>
+            <i>{{ article.author }}</i>
             <div>{{ article.date }}</div>
-          </q-item-section>
-          <q-item-section side>
-            <div class="row items-center">{{ article.author }}</div>
           </q-item-section>
         </template>
         <q-card>
@@ -38,11 +36,26 @@
               v-if="article.hasAudio"
               controls
               :src="article.audio"
+              type="audio/mpeg"
             >
               Your browser does not support the audio element.
             </audio>
             <div v-html="article.subtitle" class="text-weight-bolder"></div>
             <div v-html="article.content"></div>
+            <div class="q-mt-md">
+              <q-input
+                filled
+                v-model="article.response"
+                label="Was sind deine Gedanken dazu?"
+                hint="Was du hier schreibst kannst du später nochmal lesen."
+                type="textarea"
+                @change="saveResponse(article.date, article.response)"
+              ></q-input>
+            </div>
+
+            <div v-if="article.date == 'Freitag 8. Dezember'">
+              <SubmitForm />
+            </div>
           </q-card-section>
         </q-card>
       </q-expansion-item>
@@ -51,6 +64,8 @@
 </template>
 
 <script>
+import SubmitForm from "src/components/SubmitForm.vue";
+
 export default {
   name: "ArticleContent",
   data() {
@@ -76,9 +91,15 @@ export default {
       fetch("/articles/articles.json")
         .then((response) => response.json())
         .then((filenames) => {
-          filenames.forEach((filename) => {
-            fetch(`/articles/${filename}.txt`)
-              .then((response) => response.text())
+          // Create an array of Promises for each article fetch
+          const fetchPromises = filenames.map((filename) => {
+            return fetch(`/articles/${filename}.txt`)
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+              })
               .then((text) => {
                 const lines = text.split("\n");
                 const title = lines[0];
@@ -104,7 +125,7 @@ export default {
                 );
                 const audio = `/audio/${filename}.mp3`; // Path to the audio file
 
-                this.articles.push({
+                return {
                   title,
                   subtitle,
                   author,
@@ -112,12 +133,30 @@ export default {
                   audio,
                   hasAudio: true,
                   date: filename,
-                });
-              })
-              .catch((error) => console.error("Error loading article:", error));
+                  response: "", // Initialize response property
+                };
+              });
+          });
+
+          // Wait for all fetch Promises to resolve
+          return Promise.all(fetchPromises);
+        })
+        .then((articles) => {
+          // Now that all articles are fetched, load responses
+          this.articles = articles.map((article) => {
+            const savedResponse = localStorage.getItem(article.date) || "";
+            return { ...article, response: savedResponse };
           });
         })
-        .catch((error) => console.error("Error loading articles list:", error));
+        .catch((error) => {
+          console.error("Error loading articles list:", error);
+        });
+    },
+
+    saveResponse(articleDate, response) {
+      // Save the response to localStorage
+      console.log(localStorage);
+      localStorage.setItem(articleDate, response);
     },
 
     formatContent(lines) {
@@ -162,6 +201,9 @@ export default {
         }
       }
     },
+  },
+  components: {
+    SubmitForm,
   },
 };
 </script>

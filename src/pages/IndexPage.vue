@@ -2,9 +2,11 @@
   <q-page>
     <div class="q-pa-md">
       <IntroductionContent /> <br />
+
       <ArticleContent /> <br />
       <BookContent bookFile="/books/Ein so großes Heil.txt" /> <br />
-      <BookContent bookFile="/books/Christus offenbart im Fleisch.txt" />
+      <BookContent bookFile="/books/Christus offenbart im Fleisch.txt" /> <br />
+      <BookContent bookFile="/books/Å være kristen.txt" />
     </div>
   </q-page>
 </template>

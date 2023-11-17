@@ -11,6 +11,7 @@
           @click="toggleLeftDrawer"
         />
         <q-toolbar-title> Jesus mein Vorläufer </q-toolbar-title>
+        <!-- <LoginComponent /> -->
         <q-btn
           flat
           round
@@ -22,7 +23,7 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+        <q-item-label header> Siehe auch diese Webseiten </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -50,16 +51,16 @@ const linksList = [
     link: "https://literature.bcc.no/books/71/1",
   },
   {
-    title: "Fra Kåre",
+    title: "Jesus mein Vorläufer | Playlist",
     caption: "BMM App",
     icon: "person",
-    link: "https://bmm.brunstad.org/track/112690/de",
+    link: "https://bmm.brunstad.org/playlist/shared/4bb7705589b149db9c1366c700ca82d2",
   },
   {
     title: "Active Christianity",
     caption: "aktiveschristentum.de",
     icon: "toggle_on",
-    link: "https://aktivfeschristentum.de/",
+    link: "https://aktiveschristentum.de/",
   },
   {
     title: "Ein so großes Heil",
