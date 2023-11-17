@@ -10,6 +10,8 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
+        <img src="jmv.png" alt="Logo" class="logo" />
+
         <q-toolbar-title> Jesus mein Vorläufer </q-toolbar-title>
         <!-- <LoginComponent /> -->
         <q-btn
@@ -74,6 +76,12 @@ const linksList = [
     icon: "book",
     link: "https://literature.bcc.no/books/53",
   },
+  {
+    title: "Å være kristen",
+    caption: "BCC Literature",
+    icon: "book",
+    link: "https://literature.bcc.no/books/89",
+  },
 ];
 
 export default defineComponent({
@@ -96,3 +104,13 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 3px;
+  background-color: rgb(24, 118, 210);
+}
+</style>

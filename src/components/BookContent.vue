@@ -7,8 +7,8 @@
       :caption="bookSubtitle"
     >
       <q-expansion-item
-        v-for="chapter in bookChapters"
-        :key="chapter.number"
+        v-for="(chapter, index) in bookChapters"
+        :key="chapter.title"
         expand-separator
         group="somegroup"
       >
@@ -28,6 +28,20 @@
         <q-card>
           <q-card-section>
             <div v-html="chapter.content"></div>
+            <div class="q-mt-md">
+              <q-input
+                filled
+                v-model="chapter.response"
+                label="Was sind deine Gedanken dazu?"
+                hint="Was du hier schreibst kannst du später nochmal lesen."
+                type="textarea"
+                @change="saveResponse(chapter.title, chapter.response)"
+              ></q-input>
+            </div>
+
+            <div v-if="index === bookChapters.length - 1">
+              <SubmitForm />
+            </div>
           </q-card-section>
         </q-card>
       </q-expansion-item>
@@ -36,6 +50,8 @@
 </template>
 
 <script>
+import SubmitForm from "./SubmitForm.vue";
+
 export default {
   name: "BookContent",
   props: {
@@ -71,7 +87,6 @@ export default {
       const chapterRegex = /Kapitel (\d+)\n([^]+?)(?=\nKapitel \d+|\n*$)/g;
       let chapters = [];
       let matches;
-
       while ((matches = chapterRegex.exec(text)) !== null) {
         const chapterNumber = matches[1].trim();
         const chapterContent = matches[2].trim();
@@ -80,7 +95,6 @@ export default {
           .filter((line) => line.trim() !== "");
         const title = chapterLines.shift().trim(); // First line is the title
         let subtitle = null;
-
         // Heuristic approach to determine if the next line is a subtitle or just a paragraph
         if (
           chapterLines.length > 0 &&
@@ -90,28 +104,32 @@ export default {
           subtitle = chapterLines.shift().trim(); // Likely a subtitle
         }
 
+        const savedResponse = localStorage.getItem(title) || "";
         // Rejoin the remaining lines to form the content with empty lines between paragraphs
         const content = this.formatContent(chapterLines);
-
         chapters.push({
           number: chapterNumber,
           title: title,
           subtitle: subtitle,
           content: content,
+          response: savedResponse,
         });
       }
-
       this.bookChapters = chapters;
     },
     extractSubtitle(text) {
       const lines = text.split("\n");
       this.bookSubtitle = lines.length >= 2 ? lines[1].trim() : "";
     },
-
     formatContent(lines) {
       // Separate paragraphs with empty lines
       return lines.map((line) => `<p>${line}</p>`).join("<p></p>");
     },
+    saveResponse(chapterTitle, response) {
+      console.log(chapterTitle, response);
+      localStorage.setItem(chapterTitle, response);
+    },
   },
+  components: { SubmitForm },
 };
 </script>

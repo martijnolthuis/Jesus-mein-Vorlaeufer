@@ -1,20 +1,20 @@
 {
-  "name": "Your App Name",
-  "short_name": "App",
+  "name": "Jesus mein Vorläufer",
+  "short_name": "Jesus mein Vorläufer",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#YourDefaultColor",
-  "theme_color": "#YourDefaultColor",
+  "background_color": "#1876d2",
+  "theme_color": "#1876d2",
   "icons": [
     {
       "src": "icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "jmv.png"
     },
     {
       "src": "icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "jmv.png"
     }
   ]
 }

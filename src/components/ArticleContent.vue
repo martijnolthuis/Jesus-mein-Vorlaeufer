@@ -10,7 +10,7 @@
       caption="Artikel & Musik & Reden"
     >
       <q-expansion-item
-        v-for="(article, index) in articles"
+        v-for="(article, index) in filteredArticles"
         :key="article.title"
         v-model="currentDay[article.date]"
         icon="view_day"
@@ -78,6 +78,15 @@ export default {
   mounted() {
     this.loadArticles();
   },
+  computed: {
+    filteredArticles() {
+      const today = new Date("2023-11-20");
+      return this.articles.filter((article) => {
+        const articleDate = this.parseDate(article.date);
+        return articleDate && articleDate <= today;
+      });
+    },
+  },
   methods: {
     formatDate(date) {
       // Format the date as "Montag 21. November"
@@ -85,6 +94,33 @@ export default {
       const day = date.getDate();
       const month = date.toLocaleString("de-DE", { month: "long" });
       return `${dayOfWeek} ${day}. ${month}`;
+    },
+    parseDate(dateStr) {
+      const months = [
+        "Januar",
+        "Februar",
+        "März",
+        "April",
+        "Mai",
+        "Juni",
+        "Juli",
+        "August",
+        "September",
+        "Oktober",
+        "November",
+        "Dezember",
+      ];
+      const parts = dateStr.split(" ");
+      const day = parseInt(parts[1]);
+      const monthIndex = months.indexOf(parts[2]);
+      const year = new Date().getFullYear(); // Assuming the current year
+
+      if (monthIndex === -1) {
+        console.error("Invalid month in date:", dateStr);
+        return null;
+      }
+
+      return new Date(year, monthIndex, day);
     },
 
     loadArticles() {
@@ -154,8 +190,6 @@ export default {
     },
 
     saveResponse(articleDate, response) {
-      // Save the response to localStorage
-      console.log(localStorage);
       localStorage.setItem(articleDate, response);
     },
 
@@ -177,7 +211,6 @@ export default {
         // Saturday
         todayDate.setDate(todayDate.getDate() - 1); // Go back to Friday
       }
-
       return this.formatDate(todayDate);
     },
 

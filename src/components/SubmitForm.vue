@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { LocalStorage } from "quasar";
+
 export default {
   data() {
     return {
@@ -55,8 +57,8 @@ export default {
         body: formData,
       })
         .then((response) => {
+          console.log(LocalStorage.getAll());
           if (response.ok) {
-            console.log(formData);
             // Success notification
             this.$q.notify({
               color: "green-4",
