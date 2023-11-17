@@ -1,20 +1,36 @@
+name: Deploy to Web Server
+
 on:
   push:
     branches:
-    - master
+      - master
+      - dev
 
 jobs:
-  build:
-    name: Build
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v3
-    - name: copy file via ssh password
-      uses: appleboy/scp-action@v0.1.4
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: 22
-        source: "./dist/spa/*"
-        target: /
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install sshpass
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build your project
+        run: npx quasar build
+
+      - name: Copy files to web server using sshpass
+        if: github.ref == 'refs/heads/master'
+        run: |
+          sshpass -p ${{ secrets.STRATO_PASSWORD_MASTER }} scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./dist/spa/* ${{ secrets.STRATO_USERNAME_MASTER }}@ssh.strato.de:.
+
+      - name: Copy files to web server using sshpass
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          sshpass -p ${{ secrets.STRATO_PASSWORD_DEV }} scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./dist/spa/* ${{ secrets.STRATO_USERNAME_DEV }}@ssh.strato.de:.
