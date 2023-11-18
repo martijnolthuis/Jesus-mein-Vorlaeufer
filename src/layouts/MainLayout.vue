@@ -24,7 +24,20 @@
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-item to="/ask-question" label="Ask a Question" />
+      <q-item clickable to="/" exact class="main-menu-item">
+        <q-item-section avatar>
+          <q-icon name="home" size="md" />
+        </q-item-section>
+        <q-item-section class="menu-text">Startseite</q-item-section>
+      </q-item>
+      <q-item clickable to="/ask-question" class="main-menu-item">
+        <q-item-section avatar>
+          <q-icon name="question_answer" size="md" />
+        </q-item-section>
+        <q-item-section class="menu-text">Frage stellen</q-item-section>
+      </q-item>
+      <!-- Trennlinie -->
+      <q-separator />
       <q-list>
         <q-item-label header> Siehe auch diese Webseiten </q-item-label>
 
@@ -113,5 +126,24 @@ export default defineComponent({
   border-radius: 50%;
   padding: 3px;
   background-color: rgb(24, 118, 210);
+}
+.main-menu-item {
+  background-color: rgba(
+    24,
+    118,
+    210,
+    0.1
+  ); /* Leichter Hintergrund für Hauptmenüpunkte */
+}
+
+.menu-header {
+  padding: 10px;
+  font-weight: bold;
+  color: #1876d2; /* Stil für den Menü-Titel */
+}
+
+.menu-text {
+  font-size: 16px; /* oder eine andere Größe, die Sie bevorzugen */
+  font-weight: bold; /* optional für fettgedruckten Text */
 }
 </style>
