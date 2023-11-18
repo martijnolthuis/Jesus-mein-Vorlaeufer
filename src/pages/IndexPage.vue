@@ -3,7 +3,7 @@
     <div class="q-pa-md max-width-container">
       <IntroductionContent />
       <div class="q-pa-md q-gutter-sm">
-        <q-btn label="Ask a Question" to="/ask-question" color="primary" />
+        <q-btn label="Fragen & Antworten" to="/ask-question" color="primary" />
       </div>
       <ArticleContent /> <br />
       <BookContent bookFile="/books/Ein so großes Heil.txt" /> <br />
