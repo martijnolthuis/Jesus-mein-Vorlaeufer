@@ -16,6 +16,8 @@
             label="Deine Name"
             required
           />
+
+          <input type="hidden" name="_captcha" value="false" />
           <q-btn
             label="Abschicken"
             type="submit"
@@ -29,7 +31,7 @@
 </template>
 
 <script>
-import { LocalStorage } from "quasar";
+import { submitForm } from "src/utils/formSubmitter";
 
 export default {
   data() {
@@ -52,39 +54,7 @@ export default {
       formData.append("name", this.userName);
       formData.append("responses", JSON.stringify(this.prepareDataForEmail()));
 
-      fetch("https://formsubmit.co/martijn.olthuis2@gmail.com", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => {
-          console.log(LocalStorage.getAll());
-          if (response.ok) {
-            // Success notification
-            this.$q.notify({
-              color: "green-4",
-              textColor: "white",
-              icon: "cloud_done",
-              message: "Erfolgreich Abgeschickt!",
-            });
-          } else {
-            // Error notification
-            this.$q.notify({
-              color: "red-5",
-              textColor: "white",
-              icon: "error",
-              message: "Failed to send responses. Please try again.",
-            });
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          this.$q.notify({
-            color: "red-5",
-            textColor: "white",
-            icon: "error",
-            message: "An error occurred while sending responses.",
-          });
-        });
+      submitForm(formData);
     },
   },
 };
