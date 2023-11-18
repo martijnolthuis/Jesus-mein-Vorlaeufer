@@ -69,33 +69,41 @@ export default {
           this.questionsAndAnswers = this.parseQuestionsAndAnswers(text);
         });
     },
+
     parseQuestionsAndAnswers(text) {
       const items = [];
-      const lines = text.split("\n");
       let currentQuestion = "";
-      let currentAnswer = "";
+      let currentAnswerLines = [];
 
-      lines.forEach((line) => {
+      text.split("\n").forEach((line) => {
         if (line.startsWith("Frage:")) {
           if (currentQuestion) {
-            items.push({
-              question: currentQuestion,
-              answer: currentAnswer.trim(),
-            });
+            items.push(this.createQnAItem(currentQuestion, currentAnswerLines));
           }
           currentQuestion = line.substring("Frage:".length).trim();
-          currentAnswer = "";
+          currentAnswerLines = [];
         } else if (line.trim()) {
-          currentAnswer += line + "<br>" + "<br>"; // Use <br> for line breaks in answers
+          currentAnswerLines.push(line.trim());
         }
       });
 
-      // Add the last Q&A pair if it exists
       if (currentQuestion) {
-        items.push({ question: currentQuestion, answer: currentAnswer.trim() });
+        items.push(this.createQnAItem(currentQuestion, currentAnswerLines));
       }
 
       return items;
+    },
+
+    createQnAItem(question, answerLines) {
+      const formattedAnswer = answerLines.join("<br><br>");
+      return {
+        question: question,
+        answer: this.removeExtraBreaks(formattedAnswer),
+      };
+    },
+
+    removeExtraBreaks(text) {
+      return text.endsWith("<br><br>") ? text.slice(0, -8) : text;
     },
   },
 };
