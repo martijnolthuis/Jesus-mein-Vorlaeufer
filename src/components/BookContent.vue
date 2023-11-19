@@ -20,13 +20,14 @@
           </q-item-section>
           <q-item-section>
             <div class="text-weight-bolder">{{ chapter.title }}</div>
-            <div v-if="chapter.subtitle">
-              {{ chapter.subtitle }}
-            </div>
+            <i> {{ chapter.author }} </i>
+            <div>{{ chapter.date }}</div>
           </q-item-section>
         </template>
         <q-card>
           <q-card-section>
+            <div class="subtitle">{{ chapter.subtitle }}</div>
+            <br /><br />
             <div v-html="chapter.content"></div>
             <div class="q-mt-md">
               <q-input
@@ -80,47 +81,35 @@ export default {
     async loadBook() {
       const response = await fetch(this.bookFile);
       const text = await response.text();
-      this.extractSubtitle(text);
-      this.parseBook(text);
+      this.bookChapters = this.parseBook(text);
     },
     parseBook(text) {
-      const chapterRegex = /Kapitel (\d+)\n([^]+?)(?=\nKapitel \d+|\n*$)/g;
+      const chapterRegex =
+        /Kapitel (\d+)\n(.*?)(?:\n(.*?))?(?:\nDate: (.*?))?(?:\nAuthor: (.*?))?\n([^]+?)(?=\nKapitel \d+|\n*$)/g;
       let chapters = [];
       let matches;
       while ((matches = chapterRegex.exec(text)) !== null) {
         const chapterNumber = matches[1].trim();
-        const chapterContent = matches[2].trim();
-        const chapterLines = chapterContent
-          .split("\n")
-          .filter((line) => line.trim() !== "");
-        const title = chapterLines.shift().trim(); // First line is the title
-        let subtitle = null;
-        // Heuristic approach to determine if the next line is a subtitle or just a paragraph
-        if (
-          chapterLines.length > 0 &&
-          !chapterLines[0].endsWith(".") &&
-          chapterLines[0].length < 100
-        ) {
-          subtitle = chapterLines.shift().trim(); // Likely a subtitle
-        }
-
+        const title = matches[2].trim();
+        const subtitle = matches[3] ? matches[3].trim() : null;
+        const date = matches[4] ? matches[4].trim() : null;
+        const author = matches[5] ? matches[5].trim() : null;
+        const content = this.formatContent(matches[6].trim().split("\n"));
         const savedResponse = localStorage.getItem(title) || "";
-        // Rejoin the remaining lines to form the content with empty lines between paragraphs
-        const content = this.formatContent(chapterLines);
+
         chapters.push({
           number: chapterNumber,
           title: title,
           subtitle: subtitle,
+          date: date,
+          author: author,
           content: content,
           response: savedResponse,
         });
       }
-      this.bookChapters = chapters;
+      return chapters;
     },
-    extractSubtitle(text) {
-      const lines = text.split("\n");
-      this.bookSubtitle = lines.length >= 2 ? lines[1].trim() : "";
-    },
+
     formatContent(lines) {
       // Separate paragraphs with empty lines
       return lines.map((line) => `<p>${line}</p>`).join("<p></p>");
