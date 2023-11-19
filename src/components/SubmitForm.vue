@@ -5,7 +5,7 @@
         <div class="text-h6">Teile deine Antworten</div>
         <div class="q-my-md">
           Schreibe deine Name und drucke auf die Taste "Abschicken" um zu teilen
-          was du geschrieben hast. Auf die Weise kannst du dabei sein 100€ zu
+          das du dabei warst. Auf die Weise bekommst du ein Los um 100€ zu
           gewinnen.
         </div>
         <q-form @submit.prevent="sendData">

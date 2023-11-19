@@ -1,8 +1,10 @@
 <template>
   <q-list bordered class="rounded-borders">
-    <div class="q-pa-md q-gutter-sm">
+    <div class="q-pa-md q-gutter-sm flex">
       <q-btn color="primary" @click="setCurrentDay"> Beitrag von Heute </q-btn>
+      <q-btn label="Fragen & Antworten" to="/ask-question" color="primary" />
     </div>
+
     <q-expansion-item
       v-model="jmf"
       icon="list"
@@ -159,7 +161,7 @@ export default {
                 const content = this.formatContent(
                   lines.slice(contentStartIndex)
                 );
-                const audio = `/audio/${filename}.mp3`; // Path to the audio file
+                const audio = `/articles/audio/${filename}.mp3`; // Path to the audio file
 
                 return {
                   title,

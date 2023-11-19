@@ -10,6 +10,7 @@
         v-for="(chapter, index) in bookChapters"
         :key="chapter.title"
         expand-separator
+        v-model="chapter.isOpen"
         group="somegroup"
       >
         <template v-slot:header>
@@ -25,8 +26,17 @@
             </div>
           </q-item-section>
         </template>
-        <q-card>
-          <q-card-section>
+        <q-card v-if="chapter.content">
+          <q-card-section v-if="chapter.isOpen">
+            <audio
+              @error="() => (chapter.hasAudio = false)"
+              v-if="chapter.hasAudio"
+              controls
+              :src="`/books/audio/${bookName}/${chapter.title}.mp3`"
+              type="audio/mpeg"
+            >
+              Your browser does not support the audio element.
+            </audio>
             <div v-html="chapter.content"></div>
             <div class="q-mt-md">
               <q-input
@@ -107,11 +117,16 @@ export default {
         const savedResponse = localStorage.getItem(title) || "";
         // Rejoin the remaining lines to form the content with empty lines between paragraphs
         const content = this.formatContent(chapterLines);
+        const audio = `/books/audio/${this.bookName}/${title}.mp3`; // Path to the audio file
+
         chapters.push({
           number: chapterNumber,
           title: title,
           subtitle: subtitle,
           content: content,
+          isOpen: false,
+          audio,
+          hasAudio: true,
           response: savedResponse,
         });
       }
