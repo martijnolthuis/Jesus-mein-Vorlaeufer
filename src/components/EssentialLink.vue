@@ -9,13 +9,6 @@
       <q-item-label caption>{{ caption }}</q-item-label>
     </q-item-section>
   </q-item>
-  <q-footer reveal>
-    <q-toolbar>
-      <q-toolbar-title class="text-caption">
-        © Copyright Stiftelsen Skjulte Skatters Forlag</q-toolbar-title
-      >
-    </q-toolbar>
-  </q-footer>
 </template>
 
 <script>

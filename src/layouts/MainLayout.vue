@@ -52,6 +52,13 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-footer reveal class="custom-footer">
+      <q-toolbar>
+        <q-toolbar-title class="text-caption">
+          © Copyright Stiftelsen Skjulte Skatters Forlag</q-toolbar-title
+        >
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 
@@ -145,5 +152,9 @@ export default defineComponent({
 .menu-text {
   font-size: 16px; /* oder eine andere Größe, die Sie bevorzugen */
   font-weight: bold; /* optional für fettgedruckten Text */
+}
+
+.custom-footer .q-toolbar {
+  min-height: 35px; /* Should match the height of the footer */
 }
 </style>
