@@ -16,7 +16,7 @@
         <strong class="number">{{ totalArticles }}</strong>
       </div>
     </div>
-    <div v-if="progressValue < 500" class="status-text">
+    <div v-if="progressValue < 100" class="status-text">
       Schreibe etwas bei alle Beiträge um auf 100% zu kommen
     </div>
   </div>
