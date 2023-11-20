@@ -3,13 +3,6 @@
     <q-expansion-item icon="home" label="Einleitung" v-model="isOpen">
       <q-card>
         <q-card-section v-if="isOpen">
-          <audio
-            controls
-            src="/articles/audio/Einleitung.mp3"
-            type="audio/mpeg"
-          >
-            Your browser does not support the audio element.
-          </audio>
           <div v-html="formattedIntroduction"></div>
         </q-card-section>
       </q-card>

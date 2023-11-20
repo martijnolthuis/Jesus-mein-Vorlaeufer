@@ -28,7 +28,7 @@
         </template>
         <q-card v-if="chapter.content">
           <q-card-section v-if="chapter.isOpen">
-            <audio
+            <!-- <audio
               @error="() => (chapter.hasAudio = false)"
               v-if="chapter.hasAudio"
               controls
@@ -36,7 +36,7 @@
               type="audio/mpeg"
             >
               Your browser does not support the audio element.
-            </audio>
+            </audio> -->
             <div v-html="chapter.content"></div>
             <div class="q-mt-md">
               <q-input
