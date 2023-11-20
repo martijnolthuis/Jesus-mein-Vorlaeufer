@@ -1,14 +1,23 @@
 <template>
   <div class="on-track-indicator">
-    <q-linear-progress
-      :value="progressValue"
-      color="green"
-      stripe
-      class="progress-bar"
-    ></q-linear-progress>
-    <div class="text-center">
-      Du hast bei {{ articlesRespondedTo }} von {{ totalArticles }} Tage den
-      Beitrag gelesen/gehört und etwas dazu geschrieben.
+    <div class="status-bar">
+      <div class="status-start">
+        <strong class="number">{{ articlesRespondedTo }}</strong>
+      </div>
+
+      <q-linear-progress
+        :value="progressValue"
+        color="green"
+        stripe
+        class="progress-bar"
+      ></q-linear-progress>
+
+      <div class="status-end">
+        <strong class="number">{{ totalArticles }}</strong>
+      </div>
+    </div>
+    <div v-if="progressValue < 500" class="status-text">
+      Schreibe etwas bei alle Beiträge um auf 100% zu kommen
     </div>
   </div>
 </template>
@@ -73,10 +82,32 @@ export default {
 
 <style scoped>
 .on-track-indicator {
-  padding-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+.status-bar {
+  display: flex;
+  align-items: center;
+}
+
+.status-start,
+.status-end {
+  display: flex;
+  align-items: center;
 }
 
 .progress-bar {
-  height: 20px; /* Adjust height as needed */
+  flex-grow: 1; /* Progress bar takes the available space */
+  margin: 0 10px;
+  padding: 8px; /* Spacing around the progress bar */
+}
+
+.number {
+  font-weight: bold;
+  font-size: 1.3em; /* Larger and bold for emphasis */
+}
+.status-text {
+  text-align: center;
+  font-size: 0.9em;
 }
 </style>

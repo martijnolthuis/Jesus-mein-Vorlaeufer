@@ -1,7 +1,7 @@
 <template>
   <q-list bordered class="rounded-borders">
-    <div class="q-pa-md q-gutter-sm flex">
-      <q-btn color="primary" @click="setCurrentDay"> Beitrag Heute </q-btn>
+    <div class="q-pa-md q-gutter-sm flex justify-center">
+      <q-btn color="primary" @click="setCurrentDay"> Beitrag von Heute </q-btn>
     </div>
 
     <q-expansion-item
