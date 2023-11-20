@@ -7,8 +7,8 @@
       class="progress-bar"
     ></q-linear-progress>
     <div class="text-center">
-      Du hast bei {{ articlesRespondedTo }} von {{ totalArticles }} Tage etwas
-      geschrieben.
+      Du hast bei {{ articlesRespondedTo }} von {{ totalArticles }} Tage den
+      Beitrag gelesen/gehört und etwas dazu geschrieben.
     </div>
   </div>
 </template>
@@ -34,6 +34,7 @@ export default {
         "2023-12-07",
         "2023-12-08",
       ],
+      updateTrigger: 0, // Dummy property to trigger updates
     };
   },
   computed: {
@@ -42,6 +43,8 @@ export default {
         .length;
     },
     articlesRespondedTo() {
+      console.log("Recomputing articlesRespondedTo", this.updateTrigger);
+
       return this.articleDates.filter((date) => {
         return localStorage.getItem(
           this.formatDateForLocalStorage(new Date(date))
@@ -61,13 +64,16 @@ export default {
 
       return `${weekday} ${day}. ${month}`; // Formats to "Montag 20. November"
     },
+    updateStatus() {
+      this.updateTrigger++; // Modify dummy property to trigger reactivity
+    },
   },
 };
 </script>
 
 <style scoped>
 .on-track-indicator {
-  padding: 10px;
+  padding-bottom: 15px;
 }
 
 .progress-bar {

@@ -1,6 +1,16 @@
 <template>
   <q-page>
     <div class="q-pa-md" style="max-width: 600px; margin: 0 auto">
+      <div>
+        <q-btn
+          label="Zurück zur Startseite"
+          to="/"
+          color="primary"
+          icon="home"
+          class="flex justify-center q-mb-md"
+        />
+      </div>
+
       <h4>Stelle eine Frage</h4>
       <q-form class="q-gutter-md" @submit.prevent="sendData">
         <q-input

@@ -2,12 +2,6 @@
   <q-list bordered class="rounded-borders">
     <div class="q-pa-md q-gutter-sm flex">
       <q-btn color="primary" @click="setCurrentDay"> Beitrag Heute </q-btn>
-      <q-btn
-        label="Frage Stellen"
-        to="/ask-question"
-        color="primary"
-        icon="question_answer"
-      />
     </div>
 
     <q-expansion-item
@@ -198,6 +192,7 @@ export default {
 
     saveResponse(articleDate, response) {
       localStorage.setItem(articleDate, response);
+      this.$emit("localStorageUpdated");
     },
 
     formatContent(lines) {

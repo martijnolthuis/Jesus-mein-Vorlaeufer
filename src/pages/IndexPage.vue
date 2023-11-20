@@ -1,9 +1,16 @@
 <template>
   <q-page>
     <div class="q-pa-md max-width-container">
-      <OnTrack />
+      <q-btn
+        label="Frage stellen"
+        to="/ask-question"
+        color="primary"
+        icon="question_answer"
+        class="flex justify-center q-mb-md"
+      />
+      <OnTrack ref="onTrackComponent" />
       <IntroductionContent /> <br />
-      <ArticleContent /> <br />
+      <ArticleContent @localStorageUpdated="onLocalStorageUpdated" /> <br />
       <BookContent bookFile="/books/Ein so großes Heil.txt" /> <br />
       <BookContent bookFile="/books/Christus offenbart im Fleisch.txt" /> <br />
       <BookContent bookFile="/books/Å være kristen.txt" />
@@ -21,6 +28,11 @@ import OnTrack from "src/components/OnTrack.vue";
 export default defineComponent({
   name: "IndexPage",
   components: { BookContent, ArticleContent, IntroductionContent, OnTrack },
+  methods: {
+    onLocalStorageUpdated() {
+      this.$refs.onTrackComponent.updateStatus(); // Directly call method of OnTrack
+    },
+  },
 });
 </script>
 <style>
