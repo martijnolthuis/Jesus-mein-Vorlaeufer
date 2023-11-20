@@ -1,6 +1,7 @@
 <template>
   <q-page>
     <div class="q-pa-md max-width-container">
+      <OnTrack />
       <IntroductionContent /> <br />
       <ArticleContent /> <br />
       <BookContent bookFile="/books/Ein so großes Heil.txt" /> <br />
@@ -15,10 +16,11 @@ import BookContent from "src/components/BookContent.vue";
 import ArticleContent from "src/components/ArticleContent.vue";
 import { defineComponent } from "vue";
 import IntroductionContent from "src/components/IntroductionContent.vue";
+import OnTrack from "src/components/OnTrack.vue";
 
 export default defineComponent({
   name: "IndexPage",
-  components: { BookContent, ArticleContent, IntroductionContent },
+  components: { BookContent, ArticleContent, IntroductionContent, OnTrack },
 });
 </script>
 <style>

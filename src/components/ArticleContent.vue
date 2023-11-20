@@ -1,8 +1,13 @@
 <template>
   <q-list bordered class="rounded-borders">
     <div class="q-pa-md q-gutter-sm flex">
-      <q-btn color="primary" @click="setCurrentDay"> Beitrag von Heute </q-btn>
-      <q-btn label="Frage Stellen" to="/ask-question" color="primary" />
+      <q-btn color="primary" @click="setCurrentDay"> Beitrag Heute </q-btn>
+      <q-btn
+        label="Frage Stellen"
+        to="/ask-question"
+        color="primary"
+        icon="question_answer"
+      />
     </div>
 
     <q-expansion-item
