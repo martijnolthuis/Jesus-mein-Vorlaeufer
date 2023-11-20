@@ -1,14 +1,14 @@
 <template>
   <q-page>
     <div class="q-pa-md" style="max-width: 600px; margin: 0 auto">
-      <h4>Stelle eine anonyme Frage</h4>
+      <h4>Stelle eine Frage</h4>
       <q-form class="q-gutter-md" @submit.prevent="sendData">
         <q-input
           filled
           v-model="question"
           label="Deine Frage"
           type="textarea"
-          hint="Schreibe hier deine Frage"
+          hint="Deine Frage bleibt anonym"
           name="question"
         />
         <input type="hidden" name="_captcha" value="false" />

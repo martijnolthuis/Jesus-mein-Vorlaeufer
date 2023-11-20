@@ -2,7 +2,7 @@
   <q-list bordered class="rounded-borders">
     <div class="q-pa-md q-gutter-sm flex">
       <q-btn color="primary" @click="setCurrentDay"> Beitrag von Heute </q-btn>
-      <q-btn label="Fragen & Antworten" to="/ask-question" color="primary" />
+      <q-btn label="Frage Stellen" to="/ask-question" color="primary" />
     </div>
 
     <q-expansion-item
@@ -82,7 +82,7 @@ export default {
   },
   computed: {
     filteredArticles() {
-      const today = new Date("2023-11-20");
+      const today = new Date();
       return this.articles.filter((article) => {
         const articleDate = this.parseDate(article.date);
         return articleDate && articleDate <= today;
