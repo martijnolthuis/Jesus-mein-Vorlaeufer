@@ -16,7 +16,7 @@
         <strong class="number">{{ totalArticles }}</strong>
       </div>
     </div>
-    <div v-if="progressValue < 100" class="status-text">
+    <div v-if="progressValue < 1" class="status-text">
       Schreibe etwas bei alle Beiträge um auf 100% zu kommen
     </div>
   </div>
@@ -62,7 +62,7 @@ export default {
     },
     progressValue() {
       if (this.totalArticles === 0) return 0;
-      return (this.articlesRespondedTo / this.totalArticles) * 100; // Percentage
+      return this.articlesRespondedTo / this.totalArticles; // Percentage
     },
   },
   methods: {
