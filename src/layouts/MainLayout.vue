@@ -12,8 +12,7 @@
         />
         <img src="jmv.png" alt="Logo" class="logo" />
 
-        <q-toolbar-title> Jesus mein Vorläufer </q-toolbar-title>
-        <!-- <LoginComponent /> -->
+        <q-toolbar-title> Jesus - mein Vorläufer </q-toolbar-title>
         <q-btn
           flat
           round
