@@ -39,7 +39,7 @@
               </q-chip>
             </q-item-section>
             <q-item-section>
-              <div class="text-weight-bolder">{{ item.question }}</div>
+              <div>{{ item.question }}</div>
             </q-item-section>
           </template>
           <q-card flat bordered>
