@@ -15,7 +15,11 @@
       >
         <template v-slot:header>
           <q-item-section avatar>
-            <q-chip size="md" color="primary" text-color="white">
+            <q-chip
+              size="md"
+              :color="hasResponse(chapter.title) ? 'green' : 'primary'"
+              text-color="white"
+            >
               {{ chapter.number }}
             </q-chip>
           </q-item-section>
@@ -143,6 +147,9 @@ export default {
     saveResponse(chapterTitle, response) {
       console.log(chapterTitle, response);
       localStorage.setItem(chapterTitle, response);
+    },
+    hasResponse(chapterTitle) {
+      return !!localStorage.getItem(chapterTitle);
     },
   },
   components: { SubmitForm },

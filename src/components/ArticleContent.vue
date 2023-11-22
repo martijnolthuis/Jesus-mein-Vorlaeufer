@@ -1,7 +1,12 @@
 <template>
   <q-list bordered class="rounded-borders">
     <div class="q-pa-md q-gutter-sm flex justify-center">
-      <q-btn color="primary" @click="setCurrentDay"> Beitrag von Heute </q-btn>
+      <q-btn
+        :color="hasResponse(today()) ? 'green' : 'primary'"
+        @click="setCurrentDay"
+      >
+        Beitrag von Heute
+      </q-btn>
     </div>
 
     <q-expansion-item
@@ -20,7 +25,11 @@
       >
         <template v-slot:header>
           <q-item-section caption="test" avatar>
-            <q-chip size="md" color="primary" text-color="white">
+            <q-chip
+              size="md"
+              :color="hasResponse(article.date) ? 'green' : 'primary'"
+              text-color="white"
+            >
               {{ index + 1 }}
             </q-chip>
           </q-item-section>
@@ -235,6 +244,9 @@ export default {
           console.warn("No articles are available.");
         }
       }
+    },
+    hasResponse(date) {
+      return !!localStorage.getItem(date);
     },
   },
   components: {
