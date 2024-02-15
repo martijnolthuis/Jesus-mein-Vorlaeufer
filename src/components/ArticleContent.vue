@@ -16,7 +16,7 @@
       caption="Artikel & Musik & Reden"
     >
       <q-expansion-item
-        v-for="(article, index) in filteredArticles"
+        v-for="(article, index) in articles"
         :key="article.title"
         v-model="currentDay[article.date]"
         icon="view_day"
@@ -90,7 +90,7 @@ export default {
   },
   computed: {
     filteredArticles() {
-      const today = new Date("31.12.2024");
+      const today = new Date();
       // today.setDate(today.getDate() + 1);
       return this.articles.filter((article) => {
         const articleDate = this.parseDate(article.date);
