@@ -90,7 +90,7 @@ export default {
   },
   computed: {
     filteredArticles() {
-      const today = new Date();
+      const today = new Date("31.12.2024");
       // today.setDate(today.getDate() + 1);
       return this.articles.filter((article) => {
         const articleDate = this.parseDate(article.date);
